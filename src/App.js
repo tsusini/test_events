@@ -1,22 +1,38 @@
-import logo from "./logo.svg";
+import data from "./data/events.json";
+import parsedEvents from "./utils/parser/events";
 
 function App() {
+  const events = parsedEvents(data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen">
+      <div className="h-screen relative bg-neutral-200">
+        {events.map((event, index) => (
+          <div key={`events-${index}`}>
+            {event.map(({ start, duration, id, width, left }) => (
+              <div
+                key={`event-${id}`}
+                className="absolute 
+                border-black
+                bg-white
+                border
+                flex
+                rounded
+                justify-center
+                shadow
+                items-center"
+                style={{
+                  top: `${start}px`,
+                  height: `${duration}px`,
+                  width: `${width}%`,
+                  left: `${left}%`,
+                }}
+              >
+                <p className="text-xs  md:text-xl bold">{id}</p>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
